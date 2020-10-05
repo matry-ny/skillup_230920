@@ -44,3 +44,19 @@ echo '<br>';
 
 $test = $_GET['p2'] ?? 'default';
 var_dump($test);
+
+
+/////////// Home Work
+$x = ;
+if ($x == 1) {
+    echo 1;
+}
+if ($x == 2) {
+    echo 2;
+}
+if ($x == 3) {
+    echo 3;
+}
+// 123
+
+// switch ($number) --> ternary operators
