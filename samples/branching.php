@@ -59,4 +59,4 @@ if ($x == 3) {
 }
 // 123
 
-// switch ($number) --> ternary operators
+// switch ($number) --> ugly ternary operators
