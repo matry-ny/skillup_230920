@@ -9,7 +9,7 @@ services:
     image: nginx:1.17
     container_name: skillup_nginx
     ports:
-      - 8001:80
+      - 8011:80
     volumes:
       - ./:/var/www
       - ./docker/nginx/skillup.local.conf:/etc/nginx/conf.d/skillup.local.conf
