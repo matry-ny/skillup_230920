@@ -114,3 +114,7 @@ $GLOBALS['a4_2'] = 123123123132;
 /// - task status
 /// - subtasks
 /// --
+
+//list($test1, $test2) = [123, 444];
+[$test1, $test2] = [123, 444];
+var_dump($test1, $test2);
