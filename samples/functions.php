@@ -111,5 +111,24 @@ function returnFunction(string $arg) : string
     return $arg;
 }
 
-$global1 = returnFunction($global1);
-var_dump('outside >>> ' . $global1);
+//$global1 = returnFunction($global1);
+//var_dump('outside >>> ' . $global1);
+
+function sum(int $clientId, int ...$numbers): int
+{
+    var_dump($clientId);
+    return array_sum($numbers);
+}
+$sum = sum(101, 1, 4, 5, 7, 11);
+var_dump($sum);
+
+function sumOldSchool(int $clientId)
+{
+    var_dump($clientId);
+    $numbers = func_get_args();
+    unset($numbers[0]);
+
+    return array_sum($numbers);
+}
+$sum2 = sumOldSchool(101, 1, 4, 5, 7, 11);
+var_dump($sum2);
