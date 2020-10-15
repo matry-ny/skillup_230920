@@ -58,3 +58,16 @@ var_dump($fibonacci, $count);
 // create functions for printR and arrayCount
 // - printR analog of print_r
 // - arrayCount counts all array elements including nested
+/*
+$a = [
+    0 => 1,
+    1 => 3,
+    4 => [
+        0 => 1,
+        1 => 5,
+    ],
+];
+function arrayCount(array $array, bool $countParents = true)
+arrayCount($a, true) = 5
+arrayCount($a, false) = 4
+*/
