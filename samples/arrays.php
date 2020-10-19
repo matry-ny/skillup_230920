@@ -118,3 +118,10 @@ $GLOBALS['a4_2'] = 123123123132;
 //list($test1, $test2) = [123, 444];
 [$test1, $test2] = [123, 444];
 var_dump($test1, $test2);
+
+$a5 = [
+    'test' => 123,
+    'test' => 222
+];
+$a5['test'] = 333;
+var_dump($a5);
