@@ -48,3 +48,12 @@ fclose($file);
 </table>
 </body>
 </html>
+<!--
+Add bad words filter
+Add more fields to form (write, save and print)
+
+EXTENDED
+Add bootstrap https://getbootstrap.com/
+Add reply button and threads
+Add delete message button
+-->
