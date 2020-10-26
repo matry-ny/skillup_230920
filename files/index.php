@@ -72,6 +72,13 @@ if (rtrim($actualDir, '/') === $baseDir) {
                     <input name="name" type="text">
                     <button type="submit">Create Dir</button>
                 </form>
+                <hr>
+                <form action="uploadFiles.php" method="post" enctype="multipart/form-data">
+                    <input name="baseDir" value="<?= $actualInsideRout ?>" type="hidden">
+                    <input name="attachment" type="file">
+                    <button type="submit">Upload</button>
+                </form>
+                <hr>
                 <ul>
                     <?php foreach ($dirData as $dirRout) : ?>
                         <li><a href="?rout=<?= $actualInsideRout ?>/<?= $dirRout ?>"><?= $dirRout ?></a></li>
