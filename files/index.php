@@ -47,6 +47,9 @@ if (rtrim($actualDir, '/') === $baseDir) {
     });
 }
 
+// Home Work:
+// Clickable breadcrumbs
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -58,8 +61,10 @@ if (rtrim($actualDir, '/') === $baseDir) {
     <title>Document</title>
 </head>
 <body>
-    <p>HOME/<?= $actualInsideRout ?></p>
     <table width="100%" border="1" cellpadding="10">
+        <tr>
+            <td colspan="2">HOME/<?= $actualInsideRout ?></td>
+        </tr>
         <tr>
             <td width="30%" valign="top">
                 <form action="createDir.php" method="post">
