@@ -48,7 +48,11 @@ if (rtrim($actualDir, '/') === $baseDir) {
 }
 
 // Home Work:
-// Clickable breadcrumbs
+// 1. Clickable breadcrumbs
+// 2. Validation for files uploading
+// 2.1. File size
+// 2.2. File type
+// 2.3. Files quantity
 
 ?>
 <!doctype html>
