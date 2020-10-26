@@ -75,7 +75,7 @@ if (rtrim($actualDir, '/') === $baseDir) {
                 <hr>
                 <form action="uploadFiles.php" method="post" enctype="multipart/form-data">
                     <input name="baseDir" value="<?= $actualInsideRout ?>" type="hidden">
-                    <input name="attachment" type="file">
+                    <input name="attachment[]" type="file" multiple="multiple" max="2">
                     <button type="submit">Upload</button>
                 </form>
                 <hr>
