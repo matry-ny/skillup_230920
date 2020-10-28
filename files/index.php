@@ -58,6 +58,8 @@ if (rtrim($actualDir, '/') === $baseDir) {
 // 2.1. File size
 // 2.2. File type
 // 2.3. Files quantity
+//
+// 3. Users counter (unique and return)
 
 ?>
 <!doctype html>
