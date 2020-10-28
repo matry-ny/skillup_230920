@@ -33,7 +33,10 @@ if (is_file($actualRout)) {
             $content = nl2br(file_get_contents($actualRout));
             break;
         default:
-            $content = "File {$rout} can not be processed";
+            $content = <<<HTML
+                File {$rout} can not be processed<br>
+                Try to <a href="downloadFile.php?rout={$rout}" target="_blank">download</a>
+            HTML;
     }
 
     $actualDir = dirname($actualRout);
