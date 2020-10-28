@@ -2,6 +2,8 @@
 
 error_reporting(E_ALL);
 
+require_once __DIR__ . '/security.php';
+
 $baseInsideDir = $_POST['baseDir'] ?? null;
 $name = $_POST['name'] ?? null;
 

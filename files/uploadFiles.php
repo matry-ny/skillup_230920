@@ -1,5 +1,9 @@
 <?php
 
+error_reporting(E_ALL);
+
+require_once __DIR__ . '/security.php';
+
 $attachment = isset($_FILES['attachment']) ? reArrayFiles($_FILES['attachment']) : null;
 $baseInsideDir = $_POST['baseDir'] ?? '';
 

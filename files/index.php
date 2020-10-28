@@ -2,6 +2,8 @@
 
 error_reporting(E_ALL);
 
+require_once __DIR__ . '/security.php';
+
 $config = require __DIR__ . '/config.php';
 
 $baseDir = rtrim($config['baseDir'], '/');
@@ -70,7 +72,10 @@ if (rtrim($actualDir, '/') === $baseDir) {
 <body>
     <table width="100%" border="1" cellpadding="10">
         <tr>
-            <td colspan="2">HOME/<?= $actualInsideRout ?></td>
+            <td colspan="2">
+                HOME/<?= $actualInsideRout ?>
+                <a href="signOut.php" style="float: right">Sign Out</a>
+            </td>
         </tr>
         <tr>
             <td width="30%" valign="top">
