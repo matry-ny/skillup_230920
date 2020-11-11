@@ -6,7 +6,7 @@ return [
     'db' => [
         'host' => 'tiba00.mysql.tools',
         'user' => 'tiba00_skillupshop',
-        'password' => 'vs9-&9T4Ne',
+        'password' => '(b9_Xnd32N',
         'db' => 'tiba00_skillupshop',
     ],
 ];
