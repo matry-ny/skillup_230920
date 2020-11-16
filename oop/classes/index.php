@@ -36,3 +36,10 @@ var_dump($student, $student2, $mentor);
 
 var_dump($student->writeCode(), $mentor->writeCode());
 
+// Homework
+// создать классы Homework, Mentor, Student
+// реализовать переброс задания:
+// - от ментора к студенту для выполнения
+// - от студента к ментору на проверку
+// - от метрора к студенту с результатом проверки
+
