@@ -42,6 +42,10 @@ function reArrayFiles(array $filePost) : array
     $fileKeys = array_keys($filePost);
 
     for ($i = 0; $i < $fileCount; $i++) {
+        if (empty($filePost['tmp_name'][$i])) {
+            continue;
+        }
+
         foreach ($fileKeys as $key) {
             $fileArray[$i][$key] = $filePost[$key][$i];
         }
