@@ -9,7 +9,7 @@ use app\components\App;
 require_once __DIR__ . '/vendor/autoload.php';
 
 $config = require __DIR__ . '/configs/web.php';
-(new App($config))->run();
+App::init($config);
 
 
 // URL: local-shop.com:8011/product-category/edit?p1=2&p2=3

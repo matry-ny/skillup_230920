@@ -1,1 +1,1 @@
-<h1><?= $this->params['p1'] ?></h1>
+<h1><?= $this->variables['p1'] ?></h1>

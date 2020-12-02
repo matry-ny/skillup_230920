@@ -2,6 +2,8 @@
 
 namespace app\components;
 
+use app\exceptions\NotFoundException;
+
 /**
  * Class Template
  * @package app\components
@@ -18,6 +20,16 @@ class Template
     private string $defaultLayout;
 
     /**
+     * @var string
+     */
+    public string $content = '';
+
+    /**
+     * @var array
+     */
+    public array $variables = [];
+
+    /**
      * Template constructor.
      * @param string $viewsDir
      * @param string $defaultLayout
@@ -28,9 +40,33 @@ class Template
         $this->defaultLayout = $defaultLayout;
     }
 
-    public function render(string $template, array $variables)
+    /**
+     * @param string $template
+     * @param array $variables
+     * @return string
+     * @throws NotFoundException
+     */
+    public function render(string $template, array $variables): string
     {
-        var_dump($template, $variables);
-        exit;
+        $this->variables = $variables;
+        $this->content = $this->includeTemplate($template);
+        return $this->includeTemplate($this->defaultLayout);
+    }
+
+    /**
+     * @param string $template
+     * @return string
+     * @throws NotFoundException
+     */
+    private function includeTemplate(string $template): string
+    {
+        $templateFile = "{$this->viewsDir}/{$template}.php";
+        if (!file_exists($templateFile)) {
+            throw new NotFoundException("Template {$template} is undefined");
+        }
+
+        ob_start();
+        require $templateFile;
+        return ob_get_clean();
     }
 }

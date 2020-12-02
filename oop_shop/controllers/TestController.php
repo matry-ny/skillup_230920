@@ -11,10 +11,8 @@ use app\components\AbstractController;
  */
 class TestController extends AbstractController
 {
-    public function actionQwerty(string $id, string $title, string $value = '')
+    public function actionQwerty(): string
     {
-//        var_dump(__METHOD__, $id, $title, $value);exit;
-
-        // $this->render('test/qwerty', ['p1' => 123])
+        return $this->render('test/qwerty', ['p1' => 123]);
     }
 }

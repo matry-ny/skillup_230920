@@ -11,8 +11,8 @@ use app\components\AbstractController;
  */
 class IndexController extends AbstractController
 {
-    public function actionIndex()
+    public function actionIndex(): string
     {
-        var_dump(__METHOD__);
+        return $this->render('index/index', ['test' => 123]);
     }
 }

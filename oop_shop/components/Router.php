@@ -83,7 +83,12 @@ final class Router
         }
 
         $params = $this->prepareParams($controller, $action, $this->dispatcher->getParams());
-        $controller->$action(...$params);
+        $output = $controller->$action(...$params);
+
+        if ($output && is_string($output)) {
+            echo $output;
+            exit;
+        }
     }
 
     /**

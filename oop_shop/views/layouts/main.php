@@ -8,6 +8,6 @@
     <title>Document</title>
 </head>
 <body>
-    <?= $content ?>
+    <?= $this->content ?>
 </body>
 </html>
