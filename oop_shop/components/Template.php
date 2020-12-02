@@ -43,14 +43,15 @@ class Template
     /**
      * @param string $template
      * @param array $variables
+     * @param string|null $layout
      * @return string
      * @throws NotFoundException
      */
-    public function render(string $template, array $variables): string
+    public function render(string $template, array $variables = [], ?string $layout = null): string
     {
         $this->variables = $variables;
         $this->content = $this->includeTemplate($template);
-        return $this->includeTemplate($this->defaultLayout);
+        return $this->includeTemplate($layout ?: $this->defaultLayout);
     }
 
     /**

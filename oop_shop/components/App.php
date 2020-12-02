@@ -25,6 +25,11 @@ class App
     private ?Template $template = null;
 
     /**
+     * @var User|null
+     */
+    private ?User $user = null;
+
+    /**
      * App constructor.
      * @param array $config
      */
@@ -77,11 +82,25 @@ class App
         return $this->template;
     }
 
+    /**
+     * @return User
+     * @throws InvalidConfigException
+     */
+    public function user(): User
+    {
+        if ($this->template === null) {
+            throw new InvalidConfigException('User component is not initiated yet');
+        }
+
+        return $this->user;
+    }
+
     private function run(): void
     {
         try {
             $this
                 ->initDb()
+                ->initUser()
                 ->initTemplate()
                 ->initRouter();
         } catch (InvalidConfigException $exception) {
@@ -118,6 +137,16 @@ class App
         $user = $this->getConfigValue('components.db.user');
         $password = $this->getConfigValue('components.db.password');
         $name = $this->getConfigValue('components.db.name');
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    private function initUser(): self
+    {
+        $this->user = new User();
 
         return $this;
     }
