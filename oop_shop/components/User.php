@@ -7,7 +7,7 @@ namespace app\components;
  * Class User
  * @package app\components
  */
-class User
+class User extends AbstractComponent
 {
     /**
      * @var bool

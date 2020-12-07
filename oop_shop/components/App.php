@@ -9,6 +9,11 @@ use app\helpers\ArraysHelper;
 /**
  * Class App
  * @package app\components
+ *
+ * @method AbstractComponent db()
+ * @method Template template()
+ * @method User user()
+ * @method Request request()
  */
 class App
 {
@@ -20,14 +25,14 @@ class App
     private array $config;
 
     /**
-     * @var Template|null
+     * @var array<string, mixed>
      */
-    private ?Template $template = null;
-
-    /**
-     * @var User|null
-     */
-    private ?User $user = null;
+    private array $components = [
+        'db' => null,
+        'template' => null,
+        'user' => null,
+        'request' => null,
+    ];
 
     /**
      * App constructor.
@@ -70,29 +75,32 @@ class App
     }
 
     /**
-     * @return Template
+     * @param string $name
+     * @param array $arguments
+     * @return AbstractComponent
      * @throws InvalidConfigException
      */
-    public function template(): Template
+    public function __call(string $name, array $arguments): AbstractComponent
     {
-        if ($this->template === null) {
+        if (!array_key_exists($name, $this->components)) {
+            throw new InvalidConfigException("Component {$name} is undefined");
+        }
+
+        if ($this->components[$name] === null) {
             throw new InvalidConfigException('Template component is not initiated yet');
         }
 
-        return $this->template;
+        return $this->components[$name];
     }
 
     /**
-     * @return User
-     * @throws InvalidConfigException
+     * @param array $data
+     * @param array $rules
+     * @return Validator
      */
-    public function user(): User
+    public function validator(array $data, array $rules): Validator
     {
-        if ($this->template === null) {
-            throw new InvalidConfigException('User component is not initiated yet');
-        }
-
-        return $this->user;
+        return new Validator($data, $rules);
     }
 
     private function run(): void
@@ -100,6 +108,7 @@ class App
         try {
             $this
                 ->initDb()
+                ->initRequest()
                 ->initUser()
                 ->initTemplate()
                 ->initRouter();
@@ -143,12 +152,11 @@ class App
 
     /**
      * @return $this
+     * @throws InvalidConfigException
      */
     private function initUser(): self
     {
-        $this->user = new User();
-
-        return $this;
+        return $this->setComponent('user', new User());
     }
 
     /**
@@ -167,8 +175,31 @@ class App
             throw new InvalidConfigException('Key "components.template.layout" is required');
         }
 
-        $this->template = new Template($viewsDir, $layout);
+        return $this->setComponent('template', new Template($viewsDir, $layout));
+    }
 
+    /**
+     * @return $this
+     * @throws InvalidConfigException
+     */
+    private function initRequest(): self
+    {
+        return $this->setComponent('request', new Request());
+    }
+
+    /**
+     * @param string $key
+     * @param AbstractComponent $component
+     * @return $this
+     * @throws InvalidConfigException
+     */
+    private function setComponent(string $key, AbstractComponent $component): self
+    {
+        if (!array_key_exists($key, $this->components)) {
+            throw new InvalidConfigException("Component {$key} is not allowed");
+        }
+
+        $this->components[$key] = $component;
         return $this;
     }
 

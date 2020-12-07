@@ -3,13 +3,13 @@
 
 namespace app\controllers;
 
-use app\components\AbstractController;
+use app\components\AbstractSecuredController;
 
 /**
  * Class IndexController
  * @package app\controllers
  */
-class IndexController extends AbstractController
+class IndexController extends AbstractSecuredController
 {
     public function actionIndex(): string
     {

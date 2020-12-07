@@ -3,13 +3,13 @@
 
 namespace app\controllers;
 
-use app\components\AbstractController;
+use app\components\AbstractSecuredController;
 
 /**
  * Class TestController
  * @package app\controllers
  */
-class TestController extends AbstractController
+class TestController extends AbstractSecuredController
 {
     public function actionQwerty(): string
     {

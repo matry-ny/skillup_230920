@@ -8,7 +8,7 @@ use app\exceptions\NotFoundException;
  * Class Template
  * @package app\components
  */
-class Template
+class Template extends AbstractComponent
 {
     /**
      * @var string
