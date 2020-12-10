@@ -10,7 +10,7 @@ use app\helpers\ArraysHelper;
  * Class App
  * @package app\components
  *
- * @method AbstractComponent db()
+ * @method DB db()
  * @method Template template()
  * @method User user()
  * @method Request request()
@@ -146,6 +146,12 @@ class App
         $user = $this->getConfigValue('components.db.user');
         $password = $this->getConfigValue('components.db.password');
         $name = $this->getConfigValue('components.db.name');
+
+        if (!$host || !$user || !$password || !$name) {
+            throw new InvalidConfigException('DB config is invalid (host, user, password, name as required)');
+        }
+
+        $this->setComponent('db', new DB($host, $user, $password, $name));
 
         return $this;
     }

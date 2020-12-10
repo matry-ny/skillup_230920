@@ -39,6 +39,41 @@ class User
     public function load(array $data)
     {
         $validator = App::get()->validator($data, $this->rules())->run();
-        var_dump($validator->getValidData(), $validator->getErrors());
+        foreach ($validator->getValidData() as $key => $value) {
+            $this->{$key} = $value;
+        }
+    }
+
+    public function createUser()
+    {
+        $query = App::get()
+            ->db()
+            ->insert([
+                'name' => $this->name,
+                'login' => $this->login,
+                'password' => $this->password,
+            ])
+            ->into('users')
+            ->execute();
+
+        var_dump($query);
+
+//        $sql = <<<SQL
+//            INSERT INTO `users`
+//                (`name`, `login`, `password`, `role`, `is_active`)
+//            VALUES
+//                ('{$this->name}', '{$this->login}', '{$this->password}', '{$this->role}', '{$this->is_active}')
+//        SQL;
+//
+//        $this
+//            ->insert([
+//                'name' => $this->name,
+//                'login' => $this->login,
+//                'password' => $this->password,
+//                'role' => $this->role,
+//                'is_active' => $this->is_active,
+//            ])
+//            ->into('users')
+//            ->save();
     }
 }

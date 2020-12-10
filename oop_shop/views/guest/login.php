@@ -9,5 +9,7 @@
     <input type="password" name="password" class="form-control" placeholder="Enter your password" id="user-password" required>
 
     <button class="btn btn-lg btn-primary btn-block mt-3" type="submit">Sign In</button>
+    <p class="text-dark">or</p>
+    <a href="/guest/registration" class="btn btn-success">Sign Up</a>
     <p class="mt-5 mb-3 text-muted">&copy; 2017-<?= date('Y') ?></p>
 </form>

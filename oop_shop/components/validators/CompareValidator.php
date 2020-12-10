@@ -30,7 +30,7 @@ class CompareValidator extends AbstractValidator
      */
     public function isValid(string $key, array $data): bool
     {
-        if (!$data[$key] !== $data[$this->expectedKey]) {
+        if ($data[$key] !== $data[$this->expectedKey]) {
             $this->errors[] = "Value should be equals to value in {$this->expectedKey}";
         }
 
