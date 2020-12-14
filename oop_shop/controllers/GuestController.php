@@ -14,6 +14,24 @@ class GuestController extends AbstractController
 {
     public function actionRegistration(): string
     {
+        App::get()
+            ->db()
+            ->update('users')
+            ->set(['name' => mt_rand()])
+            ->where([
+                ['id', '=', 4]
+            ])
+            ->execute();
+
+        App::get()
+            ->db()
+            ->delete()
+            ->from('users')
+            ->where([
+                ['id', '=', 3]
+            ])
+            ->execute();
+
         $query = App::get()
             ->db()
             ->select(['id', 'name', 'password'])
@@ -21,11 +39,17 @@ class GuestController extends AbstractController
             ->where([
                 ['id', '>', 4],
                 ['id', '<', 10],
-                ['name', 'like', '%2%'],
-                ['created_at', 'between', '2020-12-09 17:00:00', '2020-12-09 20:59:59'],
+            ])
+            ->andWhere([
+                ['name', 'LIKE', '%2%'],
+                ['id', 'IN', [5, 6, 7, 8]],
+                ['name', 'IS NOT NULL']
+            ])
+            ->orWhere([
+                ['created_at', 'BETWEEN', '2020-12-09 17:00:00', '2020-12-09 20:59:59'],
             ]);
 
-        var_dump($query->all(), $query->one());exit();
+        var_dump($query->buildSQL(), $query->all(), $query->one());exit();
 
         if ($this->request()->isPost()) {
             $model = new User();

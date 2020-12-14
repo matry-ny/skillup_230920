@@ -8,9 +8,8 @@ namespace app\components\db\where;
  */
 abstract class AbstractConditionBuilder
 {
-    /**
-     * @var array
-     */
+    protected string $field;
+    protected string $operator;
     protected array $binds = [];
 
     /**
@@ -24,5 +23,13 @@ abstract class AbstractConditionBuilder
     public function getBinds(): array
     {
         return $this->binds;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getUniqueHash(): string
+    {
+        return spl_object_id($this) . '_' . mt_rand();
     }
 }

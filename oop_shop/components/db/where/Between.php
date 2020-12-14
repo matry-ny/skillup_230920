@@ -8,9 +8,6 @@ namespace app\components\db\where;
  */
 class Between extends AbstractConditionBuilder
 {
-    private string $field;
-    private string $operator;
-
     /**
      * @var float|int|string
      */
@@ -41,7 +38,7 @@ class Between extends AbstractConditionBuilder
      */
     public function build(): string
     {
-        $hash = uniqid($this->field, true);
+        $hash = $this->getUniqueHash();
         $fromAlias = "{$this->field}_{$hash}_from";
         $toAlias = "{$this->field}_{$hash}_to";
 

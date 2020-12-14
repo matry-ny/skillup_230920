@@ -2,8 +2,10 @@
 
 namespace app\components;
 
+use app\components\db\Delete;
 use app\components\db\Insert;
 use app\components\db\Select;
+use app\components\db\Update;
 use PDO;
 
 /**
@@ -42,5 +44,22 @@ class DB extends AbstractComponent
     public function select(array $fields = []): Select
     {
         return (new Select($this->connection))->setFields($fields);
+    }
+
+    /**
+     * @param string $table
+     * @return Update
+     */
+    public function update(string $table): Update
+    {
+        return (new Update($this->connection))->setTable($table);
+    }
+
+    /**
+     * @return Delete
+     */
+    public function delete(): Delete
+    {
+        return new Delete($this->connection);
     }
 }

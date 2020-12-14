@@ -11,9 +11,8 @@ use PDO;
  */
 class Select extends AbstractQuery
 {
-    /**
-     * @var array
-     */
+    use WhereTrait;
+
     private array $fields = [];
 
     /**
@@ -33,16 +32,6 @@ class Select extends AbstractQuery
     public function from(string $table): self
     {
         $this->table = $table;
-        return $this;
-    }
-
-    /**
-     * @param array $where
-     * @return $this
-     */
-    public function where(array $where): self
-    {
-        (new Where($where))->getSQL();
         return $this;
     }
 
@@ -73,16 +62,21 @@ class Select extends AbstractQuery
             return null;
         }
 
-        return $this->stmt->fetch($mode);
+        return $this->stmt->fetch($mode) ?: null;
     }
 
     /**
      * @return string
      */
-    protected function buildSQL(): string
+    public function buildSQL(): string
     {
         $fields = '`' . implode('`, `', $this->fields) . '`';
         $sql = "SELECT {$fields} FROM `{$this->table}`";
+
+        $where = $this->getWhereSQL();
+        if ($where) {
+            $sql .= " WHERE {$where}";
+        }
 
         return $sql;
     }

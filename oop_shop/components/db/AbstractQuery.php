@@ -12,19 +12,8 @@ use PDOStatement;
  */
 abstract class AbstractQuery
 {
-    /**
-     * @var PDO
-     */
     private PDO $connection;
-
-    /**
-     * @var string
-     */
     protected string $table = '';
-
-    /**
-     * @var array
-     */
     protected array $binds = [];
 
     /**

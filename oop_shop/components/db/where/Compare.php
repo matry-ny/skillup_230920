@@ -8,9 +8,6 @@ namespace app\components\db\where;
  */
 class Compare extends AbstractConditionBuilder
 {
-    private string $field;
-    private string $operator;
-
     /**
      * @var float|int|string
      */
@@ -34,7 +31,7 @@ class Compare extends AbstractConditionBuilder
      */
     public function build(): string
     {
-        $hash = uniqid($this->field, true);
+        $hash = $this->getUniqueHash();
         $alias = "{$this->field}_{$hash}";
 
         $this->binds[$alias] = $this->value;

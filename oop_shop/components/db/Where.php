@@ -11,35 +11,64 @@ use app\components\db\where\In;
 use app\components\db\where\Nullable;
 use app\exceptions\DBException;
 
+/**
+ * Class Where
+ * @package app\components\db
+ */
 class Where
 {
-    /**
-     * @var array
-     */
     private array $conditions;
+    private string $glue;
+
+    private string $sql = '';
+    private array $binds = [];
 
     /**
      * Where constructor.
      * @param array $conditions
+     * @param string $glue
      */
-    public function __construct(array $conditions)
+    public function __construct(array $conditions, string $glue)
     {
         $this->conditions = $conditions;
+        $this->glue = $glue;
+
+        $this->build();
     }
 
+    /**
+     * @return string
+     */
     public function getSQL(): string
     {
+        return $this->sql;
+    }
+
+    /**
+     * @return array
+     */
+    public function getBinds(): array
+    {
+        return $this->binds;
+    }
+
+    private function build(): void
+    {
         $conditions = [];
-        $bindings = [];
         foreach ($this->conditions as $condition) {
             $builder = $this->getBuilder($condition);
             $conditions[] = $builder->build();
-            $bindings = array_merge($bindings, $builder->getBinds());
+            $this->binds = array_merge($this->binds, $builder->getBinds());
         }
 
-        var_dump($conditions, $bindings);exit;
+        $this->sql = implode(" {$this->glue} ", $conditions);
     }
 
+    /**
+     * @param array $condition
+     * @return AbstractConditionBuilder
+     * @throws DBException
+     */
     private function getBuilder(array $condition): AbstractConditionBuilder
     {
         if (!isset($condition[1])) {
@@ -47,7 +76,7 @@ class Where
             throw new DBException("Operator is invalid in {$error}");
         }
 
-        $operator = $condition[1];
+        $operator = strtolower(trim($condition[1]));
         switch ($operator) {
             case '>':
             case '>=':
