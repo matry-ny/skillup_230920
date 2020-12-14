@@ -3,6 +3,7 @@
 namespace app\models;
 
 use app\components\App;
+use app\components\db\ActiveRecord;
 use app\components\validators\CompareValidator;
 use app\components\validators\RegExpValidator;
 use app\components\validators\StringValidator;
@@ -11,14 +12,15 @@ use app\components\validators\StringValidator;
  * Class User
  * @package app\models
  */
-class User
+class User extends ActiveRecord
 {
-    private ?int $id = null;
-    private ?string $name = null;
-    private ?string $login = null;
-    private ?string $password = null;
-    private ?string $role = null;
-    private bool $is_active = false;
+    /**
+     * @return string
+     */
+    protected function tableName(): string
+    {
+        return 'users';
+    }
 
     /**
      * @return array

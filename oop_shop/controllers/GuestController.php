@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\components\AbstractController;
 use app\components\App;
+use app\models\AccessLog;
 use app\models\User;
 
 /**
@@ -14,6 +15,28 @@ class GuestController extends AbstractController
 {
     public function actionRegistration(): string
     {
+        $al = new AccessLog();
+        var_dump($al);
+
+        $user2 = new User();
+        var_dump($user2);
+//        $user = User::findOne([['id', '=', 4]]);
+//        $user->name = 'New Name';
+//        $user->save();
+//
+//        $user->delete();
+//
+//        $user2 = new User();
+//        $user2->name = 'TEST User 2';
+//        $user2->login = '1111';
+//        $user2->password = 'p1111p';
+//        $user2->save();
+//
+//        $user2->name = 'Updated';
+//        $user2->save();
+//
+//        $user->delete();
+
         App::get()
             ->db()
             ->update('users')

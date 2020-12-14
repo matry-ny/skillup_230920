@@ -29,6 +29,14 @@ class DB extends AbstractComponent
     }
 
     /**
+     * @return PDO
+     */
+    public function getConnection(): PDO
+    {
+        return $this->connection;
+    }
+
+    /**
      * @param array $data
      * @return Insert
      */
