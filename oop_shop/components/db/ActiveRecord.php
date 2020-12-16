@@ -17,6 +17,8 @@ abstract class ActiveRecord
     private array $fields = [];
     private ?string $primaryKey = null;
     private bool $isNewRecord = true;
+    protected array $extendedFields = [];
+    private array $errors = [];
 
     public function __construct()
     {
@@ -25,6 +27,16 @@ abstract class ActiveRecord
         $this->setUpFields();
         $this->setUpPrimaryKey();
     }
+
+    /**
+     * @return string
+     */
+    abstract protected function tableName(): string;
+
+    /**
+     * @return array
+     */
+    abstract protected function rules(): array;
 
     /**
      * @param array $conditions
@@ -102,6 +114,12 @@ abstract class ActiveRecord
      */
     public function save(): bool
     {
+        $validator = App::get()->validator($this->getValidationFields(), $this->rules())->run();
+        $this->errors = $validator->getErrors();
+        if ($this->errors) {
+            return false;
+        }
+
         if ($this->isNewRecord) {
             return $this->create();
         }
@@ -127,6 +145,27 @@ abstract class ActiveRecord
         $this->isNewRecord = true;
 
         return true;
+    }
+
+    /**
+     * @return array
+     */
+    public function getErrors(): array
+    {
+        return $this->errors;
+    }
+
+    /**
+     * @return array
+     */
+    private function getValidationFields(): array
+    {
+        $fields = $this->fields;
+        foreach ($this->extendedFields as $extendedField) {
+            $fields[$extendedField] = $this->{$extendedField};
+        }
+
+        return $fields;
     }
 
     /**
@@ -210,11 +249,6 @@ abstract class ActiveRecord
 
         return true;
     }
-
-    /**
-     * @return string
-     */
-    abstract protected function tableName(): string;
 
     private function setUpFields(): void
     {
