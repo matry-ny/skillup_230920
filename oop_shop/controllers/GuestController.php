@@ -4,7 +4,6 @@ namespace app\controllers;
 
 use app\components\AbstractController;
 use app\components\App;
-use app\models\AccessLog;
 use app\models\User;
 
 /**
@@ -15,12 +14,38 @@ class GuestController extends AbstractController
 {
     public function actionRegistration(): string
     {
-        $al = new AccessLog();
-        var_dump($al);
+//        $al = new AccessLog();
+//        var_dump($al);
+//
+//        $roles = ['admin', 'publisher', 'user'];
+//        $suffix = date('Y-m-d H:i:s');
+//        $user2 = new User();
+//        $user2->name = "Created AR {$suffix}";
+//        $user2->login = "created_ar_{$suffix}";
+//        $user2->password = mt_rand() . time();
+//        $user2->role = $roles[random_int(0, 2)];
+//
+//        $user2->save();
 
-        $user2 = new User();
-        var_dump($user2);
-//        $user = User::findOne([['id', '=', 4]]);
+//        var_dump($user2, $user2->id, $user2->role);exit;
+
+
+//        var_dump($user2);
+        $user = User::findOne([['id', '=', 11]]);
+//        $user->name = 'Name ' . date('Y-m-d H:i:s');
+//        $user->save();
+        $user->delete();
+
+        $user->name = 'New 12';
+        $user->login = 'new_12';
+        $user->password = 'fasdfnasiu';
+        $user->save();
+
+        var_dump($user);exit;
+
+
+//        $users = User::findAll([['id', '>', 4]]);
+//        var_dump($user->id, $user->name, $user->password);exit;
 //        $user->name = 'New Name';
 //        $user->save();
 //

@@ -70,7 +70,7 @@ class Select extends AbstractQuery
      */
     public function buildSQL(): string
     {
-        $fields = '`' . implode('`, `', $this->fields) . '`';
+        $fields = implode(', ', $this->fields);
         $sql = "SELECT {$fields} FROM `{$this->table}`";
 
         $where = $this->getWhereSQL();

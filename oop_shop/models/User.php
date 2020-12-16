@@ -11,6 +11,15 @@ use app\components\validators\StringValidator;
 /**
  * Class User
  * @package app\models
+ *
+ * @property int id
+ * @property string name
+ * @property string login
+ * @property string password
+ * @property string role
+ * @property string created_at
+ * @property string updated_at
+ * @property bool is_active
  */
 class User extends ActiveRecord
 {
@@ -38,13 +47,13 @@ class User extends ActiveRecord
         ];
     }
 
-    public function load(array $data)
-    {
-        $validator = App::get()->validator($data, $this->rules())->run();
-        foreach ($validator->getValidData() as $key => $value) {
-            $this->{$key} = $value;
-        }
-    }
+//    public function load(array $data)
+//    {
+//        $validator = App::get()->validator($data, $this->rules())->run();
+//        foreach ($validator->getValidData() as $key => $value) {
+//            $this->{$key} = $value;
+//        }
+//    }
 
     public function createUser()
     {
