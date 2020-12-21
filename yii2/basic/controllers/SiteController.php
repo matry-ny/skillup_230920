@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\forms\RegistrationForm;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -62,6 +63,12 @@ class SiteController extends Controller
     public function actionIndex()
     {
         return $this->render('index');
+    }
+
+    public function actionRegistration()
+    {
+        $model = new RegistrationForm();
+        return $this->render('registration', ['model' => $model]);
     }
 
     /**

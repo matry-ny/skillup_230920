@@ -5,6 +5,9 @@ services:
     container_name: skillup_app
     volumes:
       - ./:/var/www
+    depends_on:
+      - db
+      - yii2_db
   nginx:
     image: nginx:1.17
     container_name: skillup_nginx
@@ -28,4 +31,16 @@ services:
       MYSQL_DATABASE: skillup_db
       MYSQL_USER: skillup_user
       MYSQL_PASSWORD: skillup_pwd
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+  yii2_db:
+    image: mysql:8.0.22
+    ports:
+      - 3307:3306
+    container_name: yii2_mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_DATABASE: yii2_db
+      MYSQL_USER: yii2_user
+      MYSQL_PASSWORD: yii2_pwd
       MYSQL_ALLOW_EMPTY_PASSWORD: 1
