@@ -13,6 +13,7 @@ services:
     volumes:
       - ./:/var/www
       - ./docker/nginx/local-shop.com.conf:/etc/nginx/conf.d/local-shop.com.conf
+      - ./docker/nginx/local-yii2.com.conf:/etc/nginx/conf.d/local-yii2.com.conf
       - ./docker/nginx/skillup.local.conf:/etc/nginx/conf.d/skillup.local.conf
     depends_on:
       - app

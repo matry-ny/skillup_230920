@@ -6,6 +6,7 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     libpng-dev \
     libjpeg62-turbo-dev \
+    libmagickwand-dev \
     libfreetype6-dev \
     libicu-dev \
     libpq-dev \
@@ -17,11 +18,14 @@ RUN apt-get update && apt-get install -y \
     vim \
     unzip \
     git \
-    curl
+    curl \
+    imagemagick
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN docker-php-ext-install pdo_mysql mysqli zip mbstring
+RUN docker-php-ext-install pdo_mysql mysqli zip mbstring \
+    && pecl install imagick \
+    && docker-php-ext-enable imagick
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
