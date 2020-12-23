@@ -11,13 +11,15 @@ class SecuredController extends Controller
 {
     /**
      * @param Action $action
-     * @return bool|void
+     * @return bool
      * @throws BadRequestHttpException
      */
-    public function beforeAction($action)
+    public function beforeAction($action): bool
     {
         if (parent::beforeAction($action) && Yii::$app->user->isGuest) {
             $this->redirect(['site/login'])->send();
         }
+
+        return true;
     }
 }

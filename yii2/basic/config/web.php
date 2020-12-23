@@ -1,5 +1,7 @@
 <?php
 
+use yii\gii\Module;
+
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 
@@ -13,7 +15,6 @@ $config = [
     ],
     'components' => [
         'request' => [
-            // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'cWzuSXuQjroGG4ON5MLkScjiV8sMgPjx',
         ],
         'cache' => [
@@ -47,6 +48,7 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                '/' => '/dashboard/index'
             ],
         ],
     ],
@@ -62,7 +64,7 @@ if (YII_ENV_DEV) {
 
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
-        'class' => \yii\gii\Module::class,
+        'class' => Module::class,
         'allowedIPs' => ['*'],
     ];
 }
