@@ -2,103 +2,62 @@
 
 namespace app\models;
 
-class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
+use Yii;
+use yii\base\InvalidArgumentException;
+use yii\web\IdentityInterface;
+use app\exceptions\DBException;
+use app\exceptions\InvalidConfigException;
+
+class User extends entities\User implements IdentityInterface
 {
-    public $id;
-    public $username;
-    public $password;
-    public $authKey;
-    public $accessToken;
-
-    private static $users = [
-        '100' => [
-            'id' => '100',
-            'username' => 'admin',
-            'password' => 'admin',
-            'authKey' => 'test100key',
-            'accessToken' => '100-token',
-        ],
-        '101' => [
-            'id' => '101',
-            'username' => 'demo',
-            'password' => 'demo',
-            'authKey' => 'test101key',
-            'accessToken' => '101-token',
-        ],
-    ];
-
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function findIdentity($id)
-    {
-        return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function findIdentityByAccessToken($token, $type = null)
-    {
-        foreach (self::$users as $user) {
-            if ($user['accessToken'] === $token) {
-                return new static($user);
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * Finds user by username
-     *
-     * @param string $username
-     * @return static|null
-     */
-    public static function findByUsername($username)
-    {
-        foreach (self::$users as $user) {
-            if (strcasecmp($user['username'], $username) === 0) {
-                return new static($user);
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
-     * {@inheritdoc}
+     * @param int|string $id
+     * @return static|null
+     * @throws DBException
+     * @throws InvalidConfigException
      */
-    public function getAuthKey()
+    public static function findIdentity($id): ?self
     {
-        return $this->authKey;
+        return self::findOne($id);
+    }
+
+    public static function findByUsername(string $username): ?self
+    {
+        return self::findOne(['login' => $username]);
+    }
+
+    public function validatePassword(string $password): bool
+    {
+        try {
+            return Yii::$app->security->validatePassword($password, $this->password);
+        } catch (InvalidArgumentException $extends) {
+            return false;
+        }
     }
 
     /**
-     * {@inheritdoc}
+     * @param mixed $token
+     * @param null $type
      */
-    public function validateAuthKey($authKey)
+    public static function findIdentityByAccessToken($token, $type = null): void
     {
-        return $this->authKey === $authKey;
+    }
+
+    public function getAuthKey(): void
+    {
     }
 
     /**
-     * Validates password
-     *
-     * @param string $password password to validate
-     * @return bool if password provided is valid for current user
+     * @param string $authKey
+     * @return bool
      */
-    public function validatePassword($password)
+    public function validateAuthKey($authKey): bool
     {
-        return $this->password === $password;
+        return false;
     }
 }

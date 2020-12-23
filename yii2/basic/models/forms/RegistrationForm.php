@@ -2,21 +2,31 @@
 
 namespace app\models\forms;
 
-class RegistrationForm extends \yii\base\Model
+use Yii;
+use app\models\entities\User;
+
+class RegistrationForm extends User
 {
-    public string $name = '';
-    public string $login = '';
-    public string $password = '';
     public string $repeatPassword = '';
 
     public function rules(): array
     {
-        return [
-            [['name', 'login', 'password', 'repeatPassword'], 'required'],
-            [['name'], 'string', 'min' => 3, 'max' => 100],
-            [['login'], 'string', 'min' => 5, 'max' => 100],
-//            [['login', 'unique', ]],
-            [['password'], 'compare', 'compareAttribute' => 'repeatPassword'],
-        ];
+        return array_merge(
+            parent::rules(),
+            [
+                [['repeatPassword'], 'required'],
+                [['repeatPassword'], 'compare', 'compareAttribute' => 'password'],
+            ]
+        );
+    }
+
+    public function beforeSave($insert): bool
+    {
+        $isOk = parent::beforeSave($insert);
+        if ($isOk) {
+            $this->password = Yii::$app->security->generatePasswordHash($this->password);
+        }
+
+        return $isOk;
     }
 }
