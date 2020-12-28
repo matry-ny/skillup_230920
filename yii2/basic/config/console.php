@@ -6,6 +6,8 @@ $db = require __DIR__ . '/db.php';
 $config = [
     'id' => 'basic-console',
     'basePath' => dirname(__DIR__),
+    'language' => 'ru-RU',
+    'sourceLanguage' => 'en-US',
     'bootstrap' => ['log'],
     'controllerNamespace' => 'app\commands',
     'aliases' => [
@@ -14,6 +16,7 @@ $config = [
         '@tests' => '@app/tests',
     ],
     'components' => [
+        'i18n' => require __DIR__ . '/i18n.php',
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],

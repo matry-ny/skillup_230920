@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\forms\ChangeLanguageForm;
 use Yii;
 use yii\captcha\CaptchaAction;
 use yii\filters\AccessControl;
@@ -11,9 +12,12 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\forms\LoginForm;
 use app\models\forms\RegistrationForm;
+use app\components\web\WebComponentsTrait;
 
 class SiteController extends Controller
 {
+    use WebComponentsTrait;
+
     public function behaviors(): array
     {
         return [
@@ -101,5 +105,16 @@ class SiteController extends Controller
         Yii::$app->user->logout();
 
         return $this->redirect('login');
+    }
+
+    public function actionSetLanguage(): Response
+    {
+        $model = new ChangeLanguageForm();
+        if (!$model->load($this->request->post()) || !$model->validate()) {
+            return $this->goBack();
+        }
+
+        $this->getLanguage()->set($model->language);
+        return $this->goBack();
     }
 }
