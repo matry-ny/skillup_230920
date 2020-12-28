@@ -5,7 +5,7 @@ use yii\web\View;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\data\ActiveDataProvider;
-use app\models\search\UserSearch;
+use app\models\search\UserEntitySearch;
 
 /**
  * @var View $this
@@ -36,7 +36,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
             ['class' => ActionColumn::class],
         ],
-    ]); ?>
-
+    ]) ?>
 
 </div>

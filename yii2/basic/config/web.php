@@ -1,5 +1,6 @@
 <?php
 
+use app\models\User;
 use yii\gii\Module;
 
 $params = require __DIR__ . '/params.php';
@@ -21,7 +22,7 @@ $config = [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
-            'identityClass' => 'app\models\User',
+            'identityClass' => User::class,
             'enableAutoLogin' => true,
         ],
         'errorHandler' => [

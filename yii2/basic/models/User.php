@@ -8,7 +8,7 @@ use yii\web\IdentityInterface;
 use app\exceptions\DBException;
 use app\exceptions\InvalidConfigException;
 
-class User extends entities\User implements IdentityInterface
+class User extends entities\UserEntity implements IdentityInterface
 {
     public function getId(): int
     {

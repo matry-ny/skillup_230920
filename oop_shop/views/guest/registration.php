@@ -2,12 +2,12 @@
 
 use app\components\Template;
 use app\helpers\ArraysHelper;
-use app\models\User;
+use app\models\UserEntity;
 
 
 /**
  * @var Template $this
- * @var User $model
+ * @var UserEntity $model
  */
 
 $model = $this->variables['model'];

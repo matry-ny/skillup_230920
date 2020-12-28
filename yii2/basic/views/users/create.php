@@ -2,10 +2,11 @@
 
 use yii\helpers\Html;
 
-/* @var $this yii\web\View */
-/* @var $model app\models\entities\User */
+/**
+ * @var yii\web\View $this
+ * @var app\models\forms\RegistrationForm $model
+ */
 
-$this->title = Yii::t('app', 'Create User');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Users'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

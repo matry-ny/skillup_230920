@@ -3,7 +3,7 @@
 namespace app\controllers;
 
 use app\components\AbstractController;
-use app\models\User;
+use app\models\UserEntity;
 
 /**
  * Class GuestController
@@ -13,7 +13,7 @@ class GuestController extends AbstractController
 {
     public function actionRegistration(): string
     {
-        $model = new User();
+        $model = new UserEntity();
         if ($model->load($this->request()->post()) && $model->save()) {
             $this->redirect('/guest/login');
         }

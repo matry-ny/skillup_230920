@@ -1,16 +1,16 @@
 <?php
 
 use yii\helpers\Html;
-use yii\web\YiiAsset;
 use yii\widgets\DetailView;
 
-/* @var $this yii\web\View */
-/* @var $model app\models\entities\User */
+/**
+ * @var yii\web\View $this
+ * @var app\models\entities\UserEntity $model
+ */
 
-$this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Users'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-YiiAsset::register($this);
+
 ?>
 <div class="user-view">
 
@@ -33,9 +33,8 @@ YiiAsset::register($this);
             'id',
             'name',
             'login',
-            'password',
-            'is_active',
-            'created_at',
+            'is_active:boolean',
+            'created_at:datetime',
         ],
     ]) ?>
 

@@ -3,9 +3,9 @@
 namespace app\models\forms;
 
 use Yii;
-use app\models\entities\User;
+use app\models\entities\UserEntity;
 
-class RegistrationForm extends User
+class RegistrationForm extends UserEntity
 {
     public string $repeatPassword = '';
 

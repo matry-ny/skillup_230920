@@ -15,7 +15,7 @@ use yii\db\ActiveRecord;
  * @property bool $is_active
  * @property string $created_at
  */
-class User extends ActiveRecord
+class UserEntity extends ActiveRecord
 {
     public static function tableName(): string
     {

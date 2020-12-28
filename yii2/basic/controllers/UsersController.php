@@ -2,12 +2,14 @@
 
 namespace app\controllers;
 
+use app\models\forms\RegistrationForm;
 use Yii;
-use app\models\entities\User;
+use app\models\entities\UserEntity;
 use app\models\search\UserSearch;
 use app\components\web\SecuredController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * UsersController implements the CRUD actions for User model.
@@ -21,7 +23,7 @@ class UsersController extends SecuredController
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -29,11 +31,7 @@ class UsersController extends SecuredController
         ];
     }
 
-    /**
-     * Lists all User models.
-     * @return mixed
-     */
-    public function actionIndex()
+    public function actionIndex(): string
     {
         $this->view->title = Yii::t('app', 'Users');
 
@@ -46,27 +44,24 @@ class UsersController extends SecuredController
         ]);
     }
 
-    /**
-     * Displays a single User model.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionView($id)
+    public function actionView(int $id): string
     {
+        $model = $this->findModel($id);
+        $this->view->title = Yii::t('app', "User: {$model->name}");
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
         ]);
     }
 
     /**
-     * Creates a new User model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
+     * @return string|Response
      */
     public function actionCreate()
     {
-        $model = new User();
+        $this->view->title = Yii::t('app', 'Create User');
+
+        $model = new RegistrationForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -78,15 +73,14 @@ class UsersController extends SecuredController
     }
 
     /**
-     * Updates an existing User model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
+     * @param int $id
+     * @return string|Response
+     * @throws NotFoundHttpException
      */
-    public function actionUpdate($id)
+    public function actionUpdate(int $id)
     {
         $model = $this->findModel($id);
+        $this->view->title = Yii::t('app', "Update User: {$model->name}");
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -97,33 +91,20 @@ class UsersController extends SecuredController
         ]);
     }
 
-    /**
-     * Deletes an existing User model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionDelete($id)
+    public function actionDelete(int $id): Response
     {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
 
-    /**
-     * Finds the User model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return User the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
+    protected function findModel(int $id): UserEntity
     {
-        if (($model = User::findOne($id)) !== null) {
-            return $model;
+        $model = UserEntity::findOne($id);
+        if (!$model) {
+            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        return $model;
     }
 }
