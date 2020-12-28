@@ -1,5 +1,6 @@
 <?php
 
+use kartik\date\DatePicker;
 use yii\grid\ActionColumn;
 use yii\web\View;
 use yii\helpers\Html;
@@ -32,7 +33,15 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
             'login',
             'is_active:boolean',
-            'created_at:datetime',
+
+            [
+                'attribute' => 'created_at',
+                'format' => 'datetime',
+                'filter' => DatePicker::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'created_at',
+                ])
+            ],
 
             ['class' => ActionColumn::class],
         ],

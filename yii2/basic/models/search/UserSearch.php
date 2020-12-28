@@ -2,6 +2,7 @@
 
 namespace app\models\search;
 
+use DateTime;
 use yii\data\ActiveDataProvider;
 use app\models\entities\UserEntity;
 
@@ -30,10 +31,17 @@ class UserSearch extends UserEntity
             ->andFilterWhere([
                 'id' => $this->id,
                 'is_active' => $this->is_active,
-                'created_at' => $this->created_at,
             ])
             ->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'login', $this->login]);
+
+        if ($this->created_at) {
+            $date = new DateTime($this->created_at);
+            $start = $date->format('Y-m-d 00:00:00');
+            $end = $date->format('Y-m-d 23:59:59');
+
+            $query->andFilterWhere(['between', 'created_at', $start, $end]);
+        }
 
         return $dataProvider;
     }
