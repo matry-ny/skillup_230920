@@ -61,7 +61,7 @@ $config = [
         'language' => LanguageComponent::class,
     ],
     'modules' => [
-        'admin' => [
+        'access-control' => [
             'class' => \mdm\admin\Module::class
         ]
     ],

@@ -8,6 +8,7 @@ use yii\bootstrap\NavBar;
 use yii\web\View;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use mdm\admin\components\MenuHelper;
 
 /**
  * @var $this View
@@ -65,10 +66,19 @@ AppAsset::register($this);
 
     <div class="container">
         <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+            'links' => $this->params['breadcrumbs'] ?? [],
         ]) ?>
         <?= Alert::widget() ?>
-        <?= $content ?>
+        <div class="row">
+            <div class="col-lg-3">
+                <?= Nav::widget([
+                    'items' => MenuHelper::getAssignedMenu(Yii::$app->user->id)
+                ]) ?>
+            </div>
+            <div class="col-lg-9">
+                <?= $content ?>
+            </div>
+        </div>
     </div>
 </div>
 
