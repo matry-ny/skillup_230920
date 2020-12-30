@@ -4,6 +4,8 @@ use app\components\web\LanguageComponent;
 use app\models\User;
 use mdm\admin\components\AccessControl;
 use yii\gii\Module;
+use yii\log\FileTarget;
+use yii\swiftmailer\Mailer;
 
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
@@ -35,7 +37,7 @@ $config = [
         'i18n' => require __DIR__ . '/i18n.php',
         'authManager' => require __DIR__ . '/authManager.php',
         'mailer' => [
-            'class' => 'yii\swiftmailer\Mailer',
+            'class' => Mailer::class,
             // send all mails to a file by default. You have to set
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
@@ -45,7 +47,7 @@ $config = [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
                 [
-                    'class' => 'yii\log\FileTarget',
+                    'class' => FileTarget::class,
                     'levels' => ['error', 'warning'],
                 ],
             ],
