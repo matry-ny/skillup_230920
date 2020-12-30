@@ -17,6 +17,7 @@ $config = [
     ],
     'components' => [
         'i18n' => require __DIR__ . '/i18n.php',
+        'authManager' => require __DIR__ . '/authManager.php',
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],

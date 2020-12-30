@@ -7,6 +7,7 @@ use Yii;
 use app\models\entities\UserEntity;
 use app\models\search\UserSearch;
 use app\components\web\SecuredController;
+use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
@@ -16,10 +17,7 @@ use yii\web\Response;
  */
 class UsersController extends SecuredController
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'verbs' => [
@@ -28,6 +26,32 @@ class UsersController extends SecuredController
                     'delete' => ['POST'],
                 ],
             ],
+//            'access' => [
+//                'class' => AccessControl::class,
+//                'only' => ['index', 'view', 'create', 'update', 'delete'],
+//                'rules' => [
+//                    [
+//                        'actions' => ['index', 'view'],
+//                        'allow' => true,
+//                        'roles' => ['view'],
+//                    ],
+//                    [
+//                        'actions' => ['create'],
+//                        'allow' => true,
+//                        'roles' => ['create'],
+//                    ],
+//                    [
+//                        'actions' => ['update'],
+//                        'allow' => true,
+//                        'roles' => ['update'],
+//                    ],
+//                    [
+//                        'actions' => ['delete'],
+//                        'allow' => true,
+//                        'roles' => ['delete'],
+//                    ],
+//                ],
+//            ],
         ];
     }
 
@@ -47,7 +71,7 @@ class UsersController extends SecuredController
     public function actionView(int $id): string
     {
         $model = $this->findModel($id);
-        $this->view->title = Yii::t('app', "User: {$model->name}");
+        $this->view->title = Yii::t('app', "User: {$model->username}");
 
         return $this->render('view', [
             'model' => $model,
@@ -80,7 +104,7 @@ class UsersController extends SecuredController
     public function actionUpdate(int $id)
     {
         $model = $this->findModel($id);
-        $this->view->title = Yii::t('app', "Update User: {$model->name}");
+        $this->view->title = Yii::t('app', "Update User: {$model->username}");
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);

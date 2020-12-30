@@ -12,7 +12,7 @@ class UserSearch extends UserEntity
     {
         return [
             [['id', 'is_active'], 'integer'],
-            [['name', 'login', 'password', 'created_at'], 'safe'],
+            [['username', 'login', 'password', 'created_at'], 'safe'],
         ];
     }
 
@@ -32,7 +32,7 @@ class UserSearch extends UserEntity
                 'id' => $this->id,
                 'is_active' => $this->is_active,
             ])
-            ->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'username', $this->username])
             ->andFilterWhere(['like', 'login', $this->login]);
 
         if ($this->created_at) {

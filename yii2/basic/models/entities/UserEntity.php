@@ -9,7 +9,7 @@ use yii\db\ActiveRecord;
  * This is the model class for table "users".
  *
  * @property int $id
- * @property string $name
+ * @property string $username
  * @property string $login
  * @property string $password
  * @property bool $is_active
@@ -25,10 +25,10 @@ class UserEntity extends ActiveRecord
     public function rules(): array
     {
         return [
-            [['name', 'login', 'password'], 'required'],
+            [['username', 'login', 'password'], 'required'],
             [['is_active'], 'boolean'],
             [['created_at'], 'safe'],
-            [['name', 'login'], 'string', 'min' => 3, 'max' => 100],
+            [['username', 'login'], 'string', 'min' => 3, 'max' => 100],
             [['password'], 'string', 'min' => 5, 'max' => 255],
             [['login'], 'unique'],
         ];

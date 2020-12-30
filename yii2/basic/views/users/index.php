@@ -21,16 +21,16 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Create User'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    <?php if (Yii::$app->user->can('create')): ?>
+        <p><?= Html::a(Yii::t('app', 'Create User'), ['create'], ['class' => 'btn btn-success']) ?></p>
+    <?php endif; ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             'id',
-            'name',
+            'username',
             'login',
             'is_active:boolean',
 
@@ -43,7 +43,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 ])
             ],
 
-            ['class' => ActionColumn::class],
+            [
+                'class' => ActionColumn::class,
+                'visibleButtons' => [
+                    'view' => Yii::$app->user->can('view'),
+                    'update' => Yii::$app->user->can('update'),
+                    'delete' => Yii::$app->user->can('delete')
+                ]
+            ],
         ],
     ]) ?>
 
