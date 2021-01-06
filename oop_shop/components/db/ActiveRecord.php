@@ -5,6 +5,7 @@ namespace app\components\db;
 use app\components\App;
 use app\exceptions\DBException;
 use app\exceptions\InvalidConfigException;
+use Exception;
 use PDO;
 
 /**
@@ -107,15 +108,12 @@ abstract class ActiveRecord
         return array_key_exists($name, $this->fields);
     }
 
-    /**
-     * @return bool
-     * @throws DBException
-     * @throws InvalidConfigException
-     */
-    public function save(): bool
+    public function save(bool $withValidation = true): bool
     {
-        $validator = App::get()->validator($this->getValidationFields(), $this->rules())->run();
-        $this->errors = $validator->getErrors();
+        if ($withValidation) {
+            $this->validate();
+        }
+
         if ($this->errors) {
             return false;
         }
@@ -125,6 +123,14 @@ abstract class ActiveRecord
         }
 
         return $this->update();
+    }
+
+    public function validate(): bool
+    {
+        $validator = App::get()->validator($this->getValidationFields(), $this->rules())->run();
+        $this->errors = $validator->getErrors();
+
+        return empty($this->errors);
     }
 
     /**
@@ -202,7 +208,7 @@ abstract class ActiveRecord
             App::get()->db()->insert($fields)->into($this->tableName())->execute();
             $newId = App::get()->db()->getConnection()->lastInsertId();
             $connection->commit();
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $connection->rollBack();
             return false;
         }
