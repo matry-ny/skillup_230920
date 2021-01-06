@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\forms\AddProductImagesForm;
 use Yii;
 use app\models\entities\ProductEntity;
 use app\models\search\ProductSearch;
@@ -9,6 +10,7 @@ use app\components\web\SecuredController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
+use yii\web\UploadedFile;
 
 class ProductsController extends SecuredController
 {
@@ -39,9 +41,17 @@ class ProductsController extends SecuredController
     public function actionView(int $id): string
     {
         $model = $this->findModel($id);
+        
+        $imageUploadModel = new AddProductImagesForm();
+        $imageUploadModel->productId = $model->id;
+
+        if ($this->request->isPost) {
+            $imageUploadModel->imageFiles = UploadedFile::getInstances($imageUploadModel, 'imageFiles');
+            $imageUploadModel->upload();
+        }
 
         $this->view->title = $model->title;
-        return $this->render('view', ['model' => $model]);
+        return $this->render('view', ['model' => $model, 'imageUploadModel' => $imageUploadModel]);
     }
 
     /**
@@ -81,6 +91,19 @@ class ProductsController extends SecuredController
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionImage(string $url): void
+    {
+        $file = Yii::getAlias('@storage') . "/{$url}";
+
+        $this->response->format = Response::FORMAT_RAW;
+        $this->response->stream = fopen($file, 'rb');
+        if (!is_resource($this->response->stream)) {
+            throw new NotFoundHttpException(Yii::t('app', 'File {url} access failed', ['url' => basename($file)]));
+        }
+
+        $this->response->send();
     }
 
     protected function findModel(int $id): ProductEntity

@@ -2,6 +2,7 @@
 
 use app\components\web\LanguageComponent;
 use app\models\User;
+use app\modules\ShopModule;
 use mdm\admin\components\AccessControl;
 use yii\gii\Module;
 use yii\log\FileTarget;
@@ -19,6 +20,7 @@ $config = [
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
+        '@storage' => __DIR__ . '/../storage',
     ],
     'components' => [
         'request' => [
@@ -65,7 +67,10 @@ $config = [
     'modules' => [
         'access-control' => [
             'class' => \mdm\admin\Module::class
-        ]
+        ],
+        'shop' => [
+            'class' => ShopModule::class,
+        ],
     ],
     'as access' => [
         'class' => AccessControl::class,

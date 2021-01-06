@@ -3,6 +3,7 @@
 namespace app\models\entities;
 
 use Yii;
+use yii\behaviors\SluggableBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
@@ -21,6 +22,17 @@ use yii\db\ActiveRecord;
  */
 class ProductEntity extends ActiveRecord
 {
+    public function behaviors(): array
+    {
+        return [
+            [
+                'class' => SluggableBehavior::class,
+                'attribute' => 'title',
+                'ensureUnique' => true,
+            ],
+        ];
+    }
+
     public static function tableName(): string
     {
         return 'products';
@@ -29,7 +41,7 @@ class ProductEntity extends ActiveRecord
     public function rules(): array
     {
         return [
-            [['category_id', 'title', 'slug', 'price'], 'required'],
+            [['category_id', 'title', 'price'], 'required'],
             [['category_id'], 'integer'],
             [['price'], 'number'],
             [['created_at'], 'safe'],

@@ -2,10 +2,12 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\bootstrap\ActiveForm;
 
 /**
  * @var yii\web\View $this
  * @var app\models\entities\ProductEntity $model
+ * @var app\models\forms\AddProductImagesForm $imageUploadModel
  */
 
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Products'), 'url' => ['index']];
@@ -27,6 +29,10 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 
+    <?php foreach ($model->images as $image): ?>
+        <?= Html::img(['image', 'url' => $image->url], ['class' => 'col-sm-3']) ?>
+    <?php endforeach ?>
+
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
@@ -41,5 +47,15 @@ $this->params['breadcrumbs'][] = $this->title;
             'created_at:datetime',
         ],
     ]) ?>
+
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]) ?>
+
+        <?= $form
+            ->field($imageUploadModel, 'imageFiles[]')
+            ->fileInput(['multiple' => true, 'accept' => 'image/*']) ?>
+
+        <?= Html::submitButton(Yii::t('app', 'Add images')) ?>
+
+    <?php ActiveForm::end() ?>
 
 </div>

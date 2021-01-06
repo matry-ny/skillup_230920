@@ -36,6 +36,17 @@ $this->params['breadcrumbs'][] = $this->title;
                     ['class' => 'form-control', 'prompt' => '--']
                 ),
             ],
+            [
+                'attribute' => 'image',
+                'format' => 'raw',
+                'value' => static function (\app\models\entities\ProductEntity $product) {
+                    $image = $product->images[0] ?? null;
+                    if (!$image) {
+                        return Yii::t('app', 'No image');
+                    }
+                    return Html::img(['image', 'url' => $image->url], ['width' => '100%']);
+                }
+            ],
             'title',
             'slug',
             'price',
