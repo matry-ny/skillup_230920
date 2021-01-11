@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y \
     locales \
     libzip-dev \
     libonig-dev \
+    zlib1g-dev \
     zip \
     jpegoptim optipng pngquant gifsicle \
     vim \
@@ -23,7 +24,7 @@ RUN apt-get update && apt-get install -y \
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN docker-php-ext-install pdo_mysql mysqli zip mbstring intl \
+RUN docker-php-ext-install pdo_mysql mysqli zip mbstring intl gd \
     && pecl install imagick \
     && docker-php-ext-enable imagick
 

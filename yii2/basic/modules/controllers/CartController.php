@@ -30,7 +30,10 @@ class CartController extends Controller
         $items = new ActiveDataProvider([
             'query' => CartEntity::find()->where(['user_id' => Yii::$app->user->id])
         ]);
-        return $this->render('index', ['items' => $items]);
+        $total = CartEntity::find()->joinWith('product')->sum('products.price * cart.count');
+
+        $this->view->title = Yii::t('app', 'Cart');
+        return $this->render('index', ['items' => $items, 'total' => $total]);
     }
 
     public function actionAdd(): Response
@@ -50,10 +53,10 @@ class CartController extends Controller
         $model = CartEntity::findOne(['user_id' => $userId, 'product_id' => $data->productId]);
         if (!$model) {
             $model = new CartEntity();
+            $model->user_id = $userId;
+            $model->product_id = $data->productId;
         }
 
-        $model->user_id = $userId;
-        $model->product_id = $data->productId;
         $model->count += $data->count;
 
         if ($model->save()) {
