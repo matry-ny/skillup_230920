@@ -77,4 +77,9 @@ class ProductEntity extends ActiveRecord
     {
         return $this->hasMany(ProductImageEntity::class, ['product_id' => 'id']);
     }
+
+    public function getMainImage(): ?ProductImageEntity
+    {
+        return $this->images[0] ?? null;
+    }
 }

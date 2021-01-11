@@ -1,6 +1,7 @@
 <?php
 
 use app\widgets\Alert;
+use app\widgets\Cart;
 use app\widgets\Language;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
@@ -47,18 +48,16 @@ AppAsset::register($this);
             ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'About', 'url' => ['/site/about']],
             ['label' => 'Contact', 'url' => ['/site/contact']],
-            Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
-            ) : (
-                '<li>'
-                . Html::beginForm(['/site/logout'], 'post')
-                . Html::submitButton(
+            Html::tag('li', sprintf(
+                '%s%s%s',
+                Html::beginForm(['/site/logout']),
+                Html::submitButton(
                     'Logout (' . Yii::$app->user->identity->username . ')',
                     ['class' => 'btn btn-link logout']
-                )
-                . Html::endForm()
-                . '</li>'
-            )
+                ),
+                Html::endForm()
+            )),
+            Html::tag('li', Cart::widget()),
         ],
     ]);
     NavBar::end();
