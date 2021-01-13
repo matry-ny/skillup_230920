@@ -10,7 +10,6 @@ use app\models\User;
  * LoginForm is the model behind the login form.
  *
  * @property-read User|null $user This property is read-only.
- *
  */
 class LoginForm extends Model
 {
